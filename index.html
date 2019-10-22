@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Bank Search</title>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="./css/index.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="./js/index.js"></script> 
+    </head>
+    <body>
+        <div class="container">
+            <br/>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8">
+                    <form class="card card-sm">
+                        <div class="card-body row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <i class="fas fa-search h4 text-body"></i>
+                            </div>
+                            <!--end of col-->
+                            <div class="col">
+                                <input class="form-control form-control-lg form-control-borderless" type="search" id=searchValue placeholder="Search...." type=text value="" oninput="myEfficientFn()">
+                            </div>
+                            <!--end of col-->
+                        </div>
+                    </form>
+                </div>
+                <!--end of col-->
+            </div>
+        </div>        
+        <hr>
+        <div id=page>
+            <div class="navigation">
+                <i class="fa fa-arrow-circle-left " id="left" style="font-size:36px" onclick="decrement()"></i>
+                <div id=currPage></div>
+                <i class="fa fa-arrow-circle-right" id="right" style="font-size:36px" onclick="increment()"></i>
+            </div>            
+            <div class=contents>
+                    <ul id=contents class="itemsContainer"></ul>
+            </div>
+        </div>
+    </body> 
+</html>
