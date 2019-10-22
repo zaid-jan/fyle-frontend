@@ -62,7 +62,11 @@ const populate = () => {
     }
 }
 
-const repopulate = () => {       
+const repopulate = () => {  
+    console.log("session storage");
+    for (i = 0; i < sessionStorage.length; i++) {
+        console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
+    }     
     let html = "";
     let counter = currPage * pageLimit
     // console.log("counter", counter);
@@ -84,19 +88,50 @@ const countSize = (data) => {
 }
 
 const createHTML = (bankObj) => {
+    let ifsc = bankObj.ifsc;
+    let val = sessionStorage.getItem(ifsc);
+    let fav = "";
+    if(val === null){
+        fav = "Favourite";
+    } else if(val === "true"){
+        fav = "Unfavourite";
+    } else {
+        fav = "Favourite";
+    }
+    console.log("val", val);
+    console.log("fav", fav);
     var html =`
-    <li class="w3-bar w3-border w3-light-grey item">
-        <div class="w3-bar-item">
-        <span class="w3-large"> ${bankObj.bank_name}</span><br />
-        <span class=spanHeadingText>IFSC: </span><span class=spanDetails>${bankObj.ifsc}</span><br>
-        <span class=spanHeadingText>Address: </span><span class=spanDetails>${bankObj.address}</span><br>
-        <span class=spanHeadingText>Branch: </span><span class=spanDetails>${bankObj.branch}</span><br>
-        <span class=spanHeadingText>District: </span><span class=spanDetails>${bankObj.district}</span><br>        
-        <span class=spanHeadingText> State: </span><span class=spanDetails>${bankObj.state}</span><br>       
+    <li class="w3-bar w3-border w3-light-grey cardList w3-bar-item">
+        <div class=row>
+            <div class="col-md-9 w3-bar-item">
+                <span class="w3-large"> ${bankObj.bank_name}</span><br>
+                <span class=spanHeadingText>IFSC: </span><span class=spanDetails>${bankObj.ifsc}</span><br>
+                <span class=spanHeadingText>Address: </span><span class=spanDetails>${bankObj.address}</span><br>
+                <span class=spanHeadingText>Branch: </span><span class=spanDetails>${bankObj.branch}</span><br>
+                <span class=spanHeadingText>District: </span><span class=spanDetails>${bankObj.district}</span><br>        
+                <span class=spanHeadingText> State: </span><span class=spanDetails>${bankObj.state}</span><br>
+            </div>
+            <div class="col-md-3"><input type="button" ifsc=${bankObj.ifsc} class=fav value="${fav}" onClick="handleFav(event)"></div>
+        </div>
     </li>
     `
     return html;
 }
+
+const handleFav = (e) => {
+    const ifsc = e.target.getAttribute('ifsc')
+    const fav =  e.target.value;
+    console.log(e.target.value)
+    if(fav === "Favourite"){        
+        e.target.value = 'Unfavourite'       
+        sessionStorage.setItem(ifsc, true)
+        console.log("is session", sessionStorage.getItem(ifsc));
+    } else {
+        e.target.value = "Favourite" 
+        sessionStorage.setItem(ifsc, false);
+        console.log("is session", sessionStorage.getItem(ifsc));        
+    }
+} 
 
 function debounce(func, wait, immediate) {
 	var timeout;
@@ -149,7 +184,7 @@ const findInData = (searchValue) => {
 
 const viewCurrPage = () => {
     console.log("currPage", currPage)
-    document.getElementById("currPage").innerHTML = `${currPage+1}/${maxPage}`;
+    document.getElementById("currPage").innerHTML = `${currPage+1} / ${maxPage}`;
 }
 
 const increment = () => {
