@@ -37,7 +37,18 @@
                 <i class="fa fa-arrow-circle-left " id="left" style="font-size:36px" onclick="decrement()"></i>
                 <div id=currPage></div>
                 <i class="fa fa-arrow-circle-right" id="right" style="font-size:36px" onclick="increment()"></i>
-            </div>            
+            </div>
+            <span class=navigation id="pageSize" > 
+                Enter Page Size  
+                <select onchange="handlePageLimitChange(this.value)">  
+                    <option>10</option>  
+                    <option>20</option>  
+                    <option>30</option>  
+                    <option>40</option>  
+                    <option>50</option>   
+                  </select>  
+                </label>  
+            </span>        
             <div class=contents>
                     <ul id=contents class="w3-ul w3-card-4 itemsContainer"></ul>
             </div>

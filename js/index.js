@@ -16,15 +16,31 @@ const compute = () => {
     }
 }
 
+const handlePageLimitChange = (e) => {
+    // console.log(e);
+    if(e === pageLimit){
+
+    } else {
+        pageLimit = e;
+        currPage = 0;
+        compute();
+        viewCurrPage();
+        repopulate();
+    }
+}
+
 window.onload = async () => {
     waitForData();
     await getData();
     dataRecieved();
 }
 
+
+
 const waitForData = () => {
     console.log("recieving data");
     document.getElementById("searchValue").disabled = true;
+    document.getElementById("pageSize").disabled = true;
     document.getElementById("contents").innerHTML = "Waiting for data";
 }
 
@@ -44,7 +60,8 @@ const getData = async () => {
 }
 
 const dataRecieved = () => {
-    console.log("recieved data");
+    // console.log("recieved data");
+    document.getElementById("pageSize").disabled = false;
     document.getElementById("searchValue").disabled = false;    
     populate(data);
 }
@@ -63,10 +80,10 @@ const populate = () => {
 }
 
 const repopulate = () => {  
-    console.log("session storage");
-    for (i = 0; i < sessionStorage.length; i++) {
-        console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
-    }     
+    // console.log("session storage");
+    // for (i = 0; i < sessionStorage.length; i++) {
+    //     console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
+    // }     
     let html = "";
     let counter = currPage * pageLimit
     // console.log("counter", counter);
@@ -76,7 +93,7 @@ const repopulate = () => {
         html += createHTML(currData[i])
     }       
     // console.log(html)
-    console.log("currData\n",currData)
+    // console.log("currData\n",currData)
     // console.log("length", currData.length)
     // console.log("html", html)
     document.getElementById("contents").innerHTML = html;
@@ -98,8 +115,8 @@ const createHTML = (bankObj) => {
     } else {
         fav = "Favourite";
     }
-    console.log("val", val);
-    console.log("fav", fav);
+    // console.log("val", val);
+    // console.log("fav", fav);
     var html =`
     <li class="w3-bar w3-border w3-light-grey cardList w3-bar-item">
         <div class=row>
@@ -121,15 +138,15 @@ const createHTML = (bankObj) => {
 const handleFav = (e) => {
     const ifsc = e.target.getAttribute('ifsc')
     const fav =  e.target.value;
-    console.log(e.target.value)
+    // console.log(e.target.value)
     if(fav === "Favourite"){        
         e.target.value = 'Unfavourite'       
         sessionStorage.setItem(ifsc, true)
-        console.log("is session", sessionStorage.getItem(ifsc));
+        // console.log("is session", sessionStorage.getItem(ifsc));
     } else {
         e.target.value = "Favourite" 
         sessionStorage.setItem(ifsc, false);
-        console.log("is session", sessionStorage.getItem(ifsc));        
+        // console.log("is session", sessionStorage.getItem(ifsc));        
     }
 } 
 
@@ -183,12 +200,12 @@ const findInData = (searchValue) => {
 }
 
 const viewCurrPage = () => {
-    console.log("currPage", currPage)
+    // console.log("currPage", currPage)
     document.getElementById("currPage").innerHTML = `${currPage+1} / ${maxPage}`;
 }
 
 const increment = () => {
-    console.log("currPage", currPage)
+    // console.log("currPage", currPage)
     if(currPage >= maxPage - 1){
 
     } else {
@@ -199,7 +216,7 @@ const increment = () => {
 }
 
 const decrement = () => {
-    console.log("currPage", currPage)
+    // console.log("currPage", currPage)
     if(currPage <= 0){
         
     }
@@ -209,3 +226,4 @@ const decrement = () => {
         repopulate();
     }    
 }
+
